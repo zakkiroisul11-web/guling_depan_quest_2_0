@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#2563eb">
+<title>Guling Depan Quest 2.0 | PJOK Interaktif</title>
+<style>
+:root{--p:#2563eb;--p2:#1d4ed8;--g:#059669;--o:#f59e0b;--r:#ef4444;--d:#0f172a;--m:#64748b;--bg:#eef4ff;--w:#fff;--line:#dbe3ef}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:linear-gradient(135deg,#eff6ff,#ecfdf5);color:var(--d)}
+.container{max-width:950px;margin:auto;padding:14px}.hero{background:linear-gradient(135deg,#1d4ed8,#059669);color:#fff;border-radius:25px;padding:27px 18px;text-align:center;box-shadow:0 12px 30px #0002}.hero h1{font-size:clamp(28px,7vw,46px);margin:5px 0}.hero p{margin:5px}.pill{display:inline-block;border:1px solid #ffffff55;background:#ffffff20;border-radius:99px;padding:7px 13px;margin-top:10px;font-size:13px}
+.progress{background:#fff;border-radius:16px;padding:13px;margin:14px 0;box-shadow:0 4px 15px #0001}.bar{height:10px;background:#e2e8f0;border-radius:20px;overflow:hidden}.fill{height:100%;width:0;background:linear-gradient(90deg,#2563eb,#10b981);transition:.4s}.muted{color:var(--m);font-size:14px}
+.nav{display:flex;gap:7px;overflow:auto;margin:12px 0}.nav button{white-space:nowrap;border:0;background:#fff;padding:10px 13px;border-radius:12px;font-weight:800;box-shadow:0 3px 10px #0001;cursor:pointer}.nav button.active{background:var(--p);color:#fff}
+.section{display:none}.section.active{display:block}.card{background:#fff;border-radius:18px;padding:18px;margin:12px 0;box-shadow:0 5px 18px #00000012}.card h2{margin-top:0}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.option{border:2px solid var(--line);padding:13px;border-radius:14px;background:#fff;cursor:pointer}.option.selected{border-color:var(--p);background:#eff6ff}.option input{display:none}
+.btn{border:0;border-radius:12px;padding:12px 16px;font-weight:800;cursor:pointer;margin:5px 3px}.primary{background:var(--p);color:#fff}.green{background:var(--g);color:#fff}.orange{background:var(--o);color:#fff}.dark{background:var(--d);color:#fff}.light{background:#e2e8f0;color:var(--d)}
+.crt{background:#f5f3ff;border-left:5px solid #7c3aed;padding:13px;border-radius:10px}.crt h3{margin-top:0;color:#6d28d9}.culture-chip{display:inline-block;padding:5px 9px;border-radius:999px;background:#ede9fe;color:#5b21b6;font-size:12px;font-weight:800;margin:2px}.tag{display:inline-block;padding:5px 9px;border-radius:8px;font-size:12px;font-weight:800;background:#dcfce7;color:#166534}.safe{background:#fff7ed;border-left:5px solid var(--o);padding:13px;border-radius:10px}.danger{background:#fee2e2;border-left:5px solid var(--r);padding:13px;border-radius:10px}
+.check{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line)}.check input{width:20px;height:20px;accent-color:var(--g)}
+input[type=text],textarea{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:10px;font:inherit}textarea{min-height:95px}.video{width:100%;aspect-ratio:16/9;border:0;border-radius:14px;background:#0f172a}
+.quiz-q{padding:13px 0;border-bottom:1px solid var(--line)}.quiz-q label{display:block;padding:9px;background:#f8fafc;border-radius:9px;margin:6px 0}.score{text-align:center;font-size:32px;font-weight:900;color:var(--p)}
+.badges{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.badge{padding:15px;border:2px solid var(--line);border-radius:15px;text-align:center;opacity:.35}.badge.earned{opacity:1;border-color:#f59e0b;background:#fffbeb}.badge .ico{font-size:32px}
+table{width:100%;border-collapse:collapse}td,th{padding:9px;border-bottom:1px solid var(--line);text-align:left}
+.footer{text-align:center;color:var(--m);font-size:12px;padding:20px}
+@media(max-width:650px){.grid,.badges{grid-template-columns:1fr}.hero{padding:22px 13px}}
+@media print{
+@page{size:A4;margin:13mm}body{background:#fff!important}.container{max-width:none!important;padding:0!important}
+.hero,.progress,.nav,#beranda,#diagnostik,#materi,#latihan,#kuis,#refleksi,.footer,.btn,.safe,.danger{display:none!important}
+#hasil{display:block!important}#hasil .card{box-shadow:none!important;border:1px solid #cbd5e1!important;border-radius:0!important}
+#hasil:before{content:"REKAP PEMBELAJARAN PJOK — GULING DEPAN QUEST 2.0 • DIFERENSIASI + CRT";display:block;text-align:center;font-size:18px;font-weight:900;margin-bottom:12px}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header class="hero">
+<div>🏃 PJOK • PEMBELAJARAN BERDIFERENSIASI</div>
+<h1>🤸 Guling Depan Quest 2.0</h1>
+<p>Diagnostik • Misi • Kolaborasi • Refleksi • Gamifikasi</p>
+<span class="pill">Media Interaktif Seminar PPG</span>
+</header>
+
+<div class="progress"><b>📈 Progress Belajar</b><div class="bar"><div id="fill" class="fill"></div></div><small id="progressText">0% selesai</small></div>
+
+<div class="nav">
+<button class="active" onclick="tab('beranda',this)">🏠 Beranda</button>
+<button onclick="tab('diagnostik',this)">🧠 Diagnostik</button>
+<button onclick="tab('materi',this)">📚 Materi</button>
+<button onclick="tab('crt',this)">🌱 CRT</button>
+<button onclick="tab('latihan',this)">🎮 Misi</button>
+<button onclick="tab('kuis',this)">📝 Kuis</button>
+<button onclick="tab('refleksi',this)">👥 Refleksi</button>
+<button onclick="tab('hasil',this)">🏆 Hasil</button>
+</div>
+
+<section id="beranda" class="section active">
+<div class="card">
+<h2>👋 Selamat Datang, Pejuang!</h2>
+<p>Media ini membantu kamu belajar guling depan sesuai <b>kesiapanmu</b>. Ikuti urutan dari diagnostik sampai refleksi.</p>
+<div class="safe"><b>🛡️ Aturan utama:</b> gunakan matras, lakukan pemanasan, ikuti arahan guru, dan jangan memaksakan gerakan yang belum siap dilakukan.</div>
+</div>
+<div class="card">
+<h3>👤 Identitas</h3>
+<input id="nama" type="text" placeholder="Nama lengkap">
+<p><small>Data disimpan hanya pada perangkat/browser yang digunakan.</small></p>
+</div>
+<div class="card crt">
+<h3>🌱 Belajar Guling Depan dari Pengalaman Kita</h3>
+<p>Media ini menggunakan <b>Culturally Responsive Teaching (CRT)</b> dengan menghubungkan pembelajaran guling depan pada pengalaman, lingkungan, bahasa, nilai gotong royong, dan keberagaman peserta didik.</p>
+<span class="culture-chip">Pengalaman siswa</span>
+<span class="culture-chip">Gotong royong</span>
+<span class="culture-chip">Konteks lingkungan</span>
+<span class="culture-chip">Saling menghargai</span>
+</div>
+<div class="card">
+<h3>🎯 Tujuan Pembelajaran</h3>
+<ul><li>Menjelaskan tahapan guling depan.</li><li>Mempraktikkan gerakan secara aman sesuai kemampuan.</li><li>Memberi umpan balik positif kepada teman.</li><li>Merefleksikan perkembangan diri.</li><li>Menghargai keberagaman pengalaman dan kemampuan teman melalui kerja sama yang positif.</li></ul>
+</div>
+<button class="btn primary" onclick="go('diagnostik')">🚀 Mulai Diagnostik</button>
+</section>
+
+<section id="diagnostik" class="section">
+<div class="card">
+<h2>🧠 Diagnostik Kesiapan</h2>
+<p class="muted">Jawab jujur. Hasil ini bukan nilai, tetapi membantu memilih tantangan yang sesuai.</p>
+<div id="diag"></div>
+<button class="btn primary" onclick="diagnose()">🔎 Lihat Rekomendasi Level</button>
+<div id="diagResult"></div>
+</div>
+</section>
+
+<section id="materi" class="section">
+<div class="card">
+<h2>📚 Materi Inti</h2>
+<ol><li>Sikap awal berdiri/jongkok.</li><li>Kedua tangan menjadi tumpuan di matras.</li><li>Dagu mendekati dada dan tubuh dibulatkan.</li><li>Dorong dengan kaki dan lakukan guling melalui punggung secara aman.</li><li>Kembali ke posisi jongkok/berdiri dengan kontrol.</li></ol>
+<div class="danger"><b>⚠️ Hindari:</b> menjadikan kepala sebagai titik tumpuan, latihan di lantai keras, atau mencoba variasi sulit tanpa pengawasan.</div>
+</div>
+<div class="card">
+<h3>🎬 Video Demonstrasi</h3>
+<iframe class="video" src="https://www.youtube.com/embed/JFcmCte9y1k" title="Video Guling Depan" allowfullscreen></iframe>
+<p style="text-align:center"><a class="btn primary" href="https://youtu.be/JFcmCte9y1k?si=5zts0ZKnB0KVd8mx" target="_blank">▶️ Buka di YouTube</a></p>
+</div>
+</section>
+
+<section id="crt" class="section">
+<div class="card crt">
+<h2>🌱 CRT — Guling Depan dalam Konteks Kita</h2>
+<p><b>Culturally Responsive Teaching</b> mengajak kamu menghubungkan materi dengan pengalaman dan lingkunganmu. Tidak ada satu pengalaman yang paling benar; setiap siswa dapat memiliki latar pengalaman olahraga yang berbeda.</p>
+</div>
+
+<div class="card">
+<h3>🏘️ Hubungkan dengan Pengalaman</h3>
+<p>Pernahkah kamu melakukan olahraga, permainan, atau aktivitas fisik bersama teman/keluarga di rumah, sekolah, lapangan kampung, atau lingkungan sekitar?</p>
+<div class="grid">
+<label class="option"><input type="radio" name="ctx" value="rumah"> 🏠 Di rumah/keluarga</label>
+<label class="option"><input type="radio" name="ctx" value="sekolah"> 🏫 Di sekolah</label>
+<label class="option"><input type="radio" name="ctx" value="lingkungan"> 🏘️ Di lingkungan/komunitas</label>
+</div>
+<textarea id="crtExperience" placeholder="Ceritakan pengalaman atau kebiasaan olahraga yang dekat dengan kehidupanmu..."></textarea>
+</div>
+
+<div class="card">
+<h3>🤝 Nilai Gotong Royong</h3>
+<p>Dalam latihan guling depan, bagaimana kamu dapat membantu teman yang masih membutuhkan bimbingan?</p>
+<div class="check"><input id="crtHelp1" type="checkbox"> Memberi semangat tanpa mengejek.</div>
+<div class="check"><input id="crtHelp2" type="checkbox"> Memberikan feedback yang spesifik dan sopan.</div>
+<div class="check"><input id="crtHelp3" type="checkbox"> Menghargai teman yang memilih level latihan berbeda.</div>
+<div class="check"><input id="crtHelp4" type="checkbox"> Memastikan keselamatan sebelum membantu atau memberi contoh.</div>
+</div>
+
+<div class="card">
+<h3>🗣️ Suara dan Bahasa Kita</h3>
+<p>Gunakan bahasa yang nyaman untuk menjelaskan satu teknik guling depan kepada teman, lalu pastikan maknanya tetap jelas dan sopan.</p>
+<textarea id="crtLanguage" placeholder="Contoh penjelasan versimu: bagaimana menjelaskan posisi dagu, tangan, dan punggung kepada teman?"></textarea>
+<button class="btn green" onclick="saveCRT()">💾 Simpan Aktivitas CRT</button>
+<div id="crtSaved"></div>
+</div>
+
+<div class="card">
+<h3>💭 Refleksi Kontekstual</h3>
+<p>Lengkapi kalimat berikut:</p>
+<textarea id="crtReflection" placeholder="Saya belajar bahwa setiap teman memiliki pengalaman yang berbeda. Saat belajar guling depan, saya dapat menghargai perbedaan tersebut dengan cara..."></textarea>
+</div>
+</section>
+
+<section id="latihan" class="section">
+<div class="card"><h2>🎮 Misi Guling Depan</h2><div id="levelInfo"><p class="muted">Selesaikan diagnostik untuk mendapatkan rekomendasi.</p></div></div>
+<div class="card"><h3>📋 Checklist Misi</h3><div id="missions"></div><div id="missionProduct"></div></div>
+<div class="card">
+<h3>👥 Peer Assessment</h3><p class="muted">Minta teman mengamati. Fokus pada feedback yang spesifik dan membangun.</p>
+<input id="peerName" type="text" placeholder="Nama teman yang diamati">
+<label class="check"><input class="peer" type="checkbox"> Posisi awal siap dan seimbang</label>
+<label class="check"><input class="peer" type="checkbox"> Tangan menjadi tumpuan dengan tepat</label>
+<label class="check"><input class="peer" type="checkbox"> Dagu mendekati dada</label>
+<label class="check"><input class="peer" type="checkbox"> Gerakan berguling terkontrol</label>
+<label class="check"><input class="peer" type="checkbox"> Sikap akhir terkendali</label>
+<textarea id="peerFeedback" placeholder="Satu kekuatan dan satu saran untuk teman..."></textarea>
+<button class="btn green" onclick="savePeer()">💾 Simpan Peer Assessment</button>
+</div>
+</section>
+
+<section id="kuis" class="section">
+<div class="card"><h2>📝 Kuis Formatif</h2><div id="quiz"></div><button class="btn primary" onclick="grade()">Periksa Jawaban</button><div id="quizResult"></div></div>
+</section>
+
+<section id="refleksi" class="section">
+<div class="card">
+<h2>👤 Refleksi & Assessment as Learning</h2>
+<p>Apa yang paling kamu rasakan setelah latihan?</p><textarea id="reflection" placeholder="Tuliskan pengalamanmu..."></textarea>
+<p>⭐ Tingkat keyakinan melakukan gerakan dengan aman:</p>
+<div class="grid" id="selfRating">
+<label class="option"><input type="radio" name="self" value="1">1 — Perlu banyak bimbingan</label>
+<label class="option"><input type="radio" name="self" value="2">2 — Mulai memahami</label>
+<label class="option"><input type="radio" name="self" value="3">3 — Cukup yakin</label>
+</div>
+<p>Yang sudah saya kuasai:</p><textarea id="mastered"></textarea>
+<p>Yang ingin saya perbaiki:</p><textarea id="improve"></textarea>
+<button class="btn green" onclick="saveReflection()">💾 Simpan Refleksi</button>
+</div>
+</section>
+
+<section id="hasil" class="section">
+<div class="card">
+<h2>🏆 Dashboard Hasil Belajar</h2>
+<table>
+<tr><th>Nama</th><td id="rNama">-</td></tr>
+<tr><th>Hasil Diagnostik</th><td id="rDiag">-</td></tr>
+<tr><th>Level</th><td id="rLevel">-</td></tr>
+<tr><th>Misi</th><td id="rMission">0</td></tr>
+<tr><th>Skor Kuis</th><td id="rQuiz">-</td></tr>
+<tr><th>Peer Assessment</th><td id="rPeer">-</td></tr>
+<tr><th>Penilaian Diri</th><td id="rSelf">-</td></tr>
+<tr><th>Aktivitas CRT</th><td id="rCRT">Belum</td></tr>
+</table>
+<h3>🏅 Badge</h3><div class="badges">
+<div id="b1" class="badge"><div class="ico">🧭</div><b>Penjelajah</b><br><small>Menyelesaikan diagnostik</small></div>
+<div id="b2" class="badge"><div class="ico">🤸</div><b>Praktisi</b><br><small>Menyelesaikan misi</small></div>
+<div id="b3" class="badge"><div class="ico">🧠</div><b>Pemikir</b><br><small>Menyelesaikan kuis</small></div>
+<div id="b4" class="badge"><div class="ico">🤝</div><b>Teman Hebat</b><br><small>Peer assessment</small></div>
+<div id="b5" class="badge"><div class="ico">🌱</div><b>Reflektif</b><br><small>Menyelesaikan refleksi</small></div>
+<div id="bCRT" class="badge"><div class="ico">🌍</div><b>Teman Kontekstual</b><br><small>Menyelesaikan aktivitas CRT</small></div>
+<div id="b6" class="badge"><div class="ico">🏆</div><b>Quest Complete</b><br><small>Semua tahap selesai</small></div>
+</div>
+<h3>📝 Ringkasan Refleksi</h3><p id="rReflection">-</p>
+<button class="btn orange" onclick="printResult()">🖨️ Cetak Rekap / PDF</button>
+<button class="btn primary" onclick="shareWA()">📲 Kirim ke Guru via WhatsApp</button>
+</div>
+</section>
+<div class="footer">© Guling Depan Quest 2.0 • Media Pembelajaran PJOK • Pembelajaran Berdiferensiasi + CRT</div>
+</div>
+
+<script>
+const S=JSON.parse(localStorage.getItem('GDQ2')||'{}');
+const diagQ=[
+['Pernah melakukan guling depan?',['Belum pernah','Pernah tetapi masih ragu','Sudah bisa']],
+['Seberapa paham posisi tangan?',['Masih bingung','Cukup paham','Sudah paham dan bisa mempraktikkan']],
+['Seberapa nyaman menggunakan matras?',['Belum nyaman','Cukup nyaman','Sangat nyaman']],
+['Saat belajar gerakan baru, kamu lebih membutuhkan...',['Bimbingan langkah demi langkah','Contoh lalu mencoba sendiri','Tantangan dan variasi']],
+['Bagaimana kesiapanmu hari ini?',['Saya ingin mulai dari dasar','Saya siap berlatih mandiri','Saya siap menganalisis/berkreasi']]
+];
+const levels={
+1:{name:'Level 1 — Fondasi & Bimbingan',target:'Membangun rasa aman dan memahami gerakan dasar melalui pengalaman belajar yang sesuai kesiapan siswa.',steps:['Pemanasan dan cek kondisi tubuh.','Latihan posisi tangan di matras.','Latihan dagu mendekati dada.','Latihan pembulatan tubuh dengan bantuan guru.'],product:'Foto 3 tahap atau video 15 detik.'},
+2:{name:'Level 2 — Mandiri / Standar',target:'Melakukan guling depan utuh dengan kontrol dan menghubungkannya dengan pengalaman belajar bersama teman.',steps:['Awalan berdiri/jongkok.','Tangan selebar bahu sebagai tumpuan.','Dagu mendekati dada dan dorong kaki.','Guling dan kembali ke posisi akhir.'],product:'Video 2 kali pengulangan.'},
+3:{name:'Level 3 — Pengayaan & Analisis',target:'Menganalisis kualitas gerakan, menghargai perbedaan kemampuan, dan memberikan feedback yang membangun.',steps:['Lakukan gerakan dengan kontrol.','Amati gerakan teman berdasarkan indikator.','Tuliskan satu kekuatan dan satu saran.','Variasi hanya jika disetujui guru dan aman.'],product:'Video analisis/umpan balik teman.'}
+};
+const quizQ=[
+['Posisi dagu saat guling depan sebaiknya...', ['Mendekati dada','Mendongak','Diputar ke samping'],0],
+['Latihan guling depan sebaiknya dilakukan...', ['Di lantai keras','Di matras dan dengan pengawasan','Di tempat licin'],1],
+['Bagian yang digunakan untuk berguling secara aman adalah...', ['Tempurung kepala','Punggung yang dibulatkan','Leher'],1],
+['Peer assessment yang baik harus...', ['Mengejek kesalahan','Spesifik dan membangun','Tidak memberi feedback'],1],
+['Jika belum siap melakukan variasi sulit...', ['Tetap memaksa','Kembali ke tahap sesuai kesiapan dan minta arahan guru','Mencoba tanpa matras'],1]
+];
+
+function save(){localStorage.setItem('GDQ2',JSON.stringify(S));updateProgress();updateResult()}
+function saveCRT(){
+  S.crt={
+    context:document.querySelector('input[name=ctx]:checked')?.value||'',
+    experience:document.getElementById('crtExperience').value,
+    help:[1,2,3,4].map(i=>document.getElementById('crtHelp'+i).checked),
+    language:document.getElementById('crtLanguage').value,
+    reflection:document.getElementById('crtReflection').value
+  };
+  save();
+  document.getElementById('crtSaved').innerHTML='<div class="crt"><b>✅ Aktivitas CRT tersimpan.</b><p>Pengalaman, nilai gotong royong, dan refleksimu sudah masuk ke rekap pembelajaran.</p></div>';
+}
+function tab(id,btn){document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));if(btn)btn.classList.add('active');updateResult()}
+function go(id){let b=[...document.querySelectorAll('.nav button')].find(x=>x.textContent.toLowerCase().includes(id==='diagnostik'?'diagnostik':id));tab(id,b)}
+function buildDiag(){document.getElementById('diag').innerHTML=diagQ.map((q,i)=>`<div class="quiz-q"><b>${i+1}. ${q[0]}</b>${q[1].map((a,j)=>`<label><input type="radio" name="d${i}" value="${j}"> ${a}</label>`).join('')}</div>`).join('')}
+function diagnose(){
+let vals=[];for(let i=0;i<diagQ.length;i++){let x=document.querySelector(`input[name=d${i}]:checked`);if(!x)return alert('Lengkapi semua pertanyaan diagnostik terlebih dahulu.');vals.push(+x.value)}
+let sum=vals.reduce((a,b)=>a+b,0);let lvl=sum<=4?1:sum<=8?2:3;S.diagScore=sum;S.level=lvl;
+document.getElementById('diagResult').innerHTML=`<div class="card" style="background:#eff6ff"><h3>🎯 Rekomendasi: ${levels[lvl].name}</h3><p>${levels[lvl].target}</p><button class="btn green" onclick="tab('latihan',document.querySelectorAll('.nav button')[3])">🚀 Masuk ke Misi</button></div>`;
+buildMissions();save()
+}
+function buildMissions(){
+if(!S.level)return;
+let d=levels[S.level];document.getElementById('levelInfo').innerHTML=`<span class="tag">Rekomendasi Level ${S.level}</span><h3>${d.name}</h3><p>${d.target}</p>`;
+document.getElementById('missions').innerHTML=d.steps.map((x,i)=>`<label class="check"><input class="mission" type="checkbox" ${S.missions?.includes(i)?'checked':''} onchange="missionChange()"> ${i+1}. ${x}</label>`).join('');
+document.getElementById('missionProduct').innerHTML=`<h4>🎯 Produk Akhir</h4><p>${d.product}</p>`;
+}
+function missionChange(){S.missions=[...document.querySelectorAll('.mission')].map((x,i)=>x.checked?i:null).filter(x=>x!==null);save()}
+function buildQuiz(){document.getElementById('quiz').innerHTML=quizQ.map((q,i)=>`<div class="quiz-q"><b>${i+1}. ${q[0]}</b>${q[1].map((a,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${a}</label>`).join('')}</div>`).join('')}
+function grade(){let score=0;for(let i=0;i<quizQ.length;i++){let a=document.querySelector(`input[name=q${i}]:checked`);if(!a)return alert('Jawab semua soal terlebih dahulu.');if(+a.value===quizQ[i][2])score++}S.quiz=score;save();document.getElementById('quizResult').innerHTML=`<div class="score">${score}/5</div><p style="text-align:center">${score===5?'🎉 Luar biasa!':score>=3?'👍 Bagus, teruskan refleksimu!':'💪 Pelajari kembali materi lalu coba lagi.'}</p>`}
+function savePeer(){let checked=document.querySelectorAll('.peer:checked').length;S.peer={name:document.getElementById('peerName').value,checked,feedback:document.getElementById('peerFeedback').value};save();alert('Peer assessment tersimpan.')}
+function saveReflection(){let r=document.querySelector('input[name=self]:checked');S.reflection=document.getElementById('reflection').value;S.self=r?.value||'';S.mastered=document.getElementById('mastered').value;S.improve=document.getElementById('improve').value;save();alert('Refleksi tersimpan.')}
+function updateProgress(){
+let points=0;if(S.diagScore!==undefined)points++;if((S.missions||[]).length>=4)points++;if(S.quiz!==undefined)points++;if(S.peer)points++;if(S.reflection)points++;if(S.crt)points++;let pct=Math.round(points/6*100);document.getElementById('fill').style.width=pct+'%';document.getElementById('progressText').textContent=pct+'% selesai'}
+function updateResult(){
+let name=document.getElementById('nama')?.value||S.nama||'-';document.getElementById('rNama').textContent=name;document.getElementById('rDiag').textContent=S.diagScore!==undefined?`${S.diagScore}/10`:'Belum';document.getElementById('rLevel').textContent=S.level?levels[S.level].name:'-';document.getElementById('rMission').textContent=`${(S.missions||[]).length}/${S.level?levels[S.level].steps.length:0}`;document.getElementById('rQuiz').textContent=S.quiz!==undefined?`${S.quiz}/5`:'-';document.getElementById('rPeer').textContent=S.peer?`${S.peer.checked}/5 aspek`:'-';document.getElementById('rSelf').textContent=S.self?`${S.self}/3`:'-';document.getElementById('rCRT').textContent=S.crt?'Selesai':'Belum';document.getElementById('rReflection').textContent=S.reflection||'-';
+[['b1',S.diagScore!==undefined],['b2',(S.missions||[]).length>=4],['b3',S.quiz!==undefined],['b4',!!S.peer],['b5',!!S.reflection],['bCRT',!!S.crt],['b6',S.diagScore!==undefined&&(S.missions||[]).length>=4&&S.quiz!==undefined&&S.peer&&S.reflection&&S.crt]].forEach(([id,on])=>document.getElementById(id).classList.toggle('earned',on))
+}
+function printResult(){updateResult();document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));document.getElementById('hasil').classList.add('active');setTimeout(()=>window.print(),150)}
+function shareWA(){let n=document.getElementById('nama').value||S.nama||'Peserta didik';let msg=`REKAP GULING DEPAN QUEST 2.0%0ANama: ${n}%0ALevel: ${S.level||'-'}%0AMisi: ${(S.missions||[]).length}%0ASkor Kuis: ${S.quiz??'-'}/5%0APeer Assessment: ${S.peer?.checked??'-'}/5%0ACRT: ${S.crt?'Selesai':'Belum'}%0ARefleksi: ${S.reflection||'-'}`;window.open('https://wa.me/?text='+msg,'_blank')}
+document.getElementById('nama').addEventListener('input',e=>{S.nama=e.target.value;save()});
+if(S.nama)document.getElementById('nama').value=S.nama;
+if(S.crt){
+  const c=S.crt;
+  if(c.context){const el=document.querySelector(`input[name=ctx][value="${c.context}"]`);if(el)el.checked=true;}
+  document.getElementById('crtExperience').value=c.experience||'';
+  (c.help||[]).forEach((v,i)=>{const el=document.getElementById('crtHelp'+(i+1));if(el)el.checked=!!v;});
+  document.getElementById('crtLanguage').value=c.language||'';
+  document.getElementById('crtReflection').value=c.reflection||'';
+}
+buildDiag();buildQuiz();if(S.level)buildMissions();updateProgress();updateResult();
+</script>
+</body>
+</html>
